@@ -12,7 +12,7 @@
 #define CUN_CONNECTION_PREALLOCATE 8192
 #define CUN_SERVER_CONNECTION_PULL_SIZE 1000000
 
-#define CUN_ACCEPT_AGAIN        \
+#define CUN_TCP_ACCEPT_AGAIN        \
     ((EAGAIN       == errno) || \
      (EINTR        == errno) || \
      (ENETDOWN     == errno) || \
@@ -23,6 +23,10 @@
      (EHOSTUNREACH == errno) || \
      (EOPNOTSUPP   == errno) || \
      (ENETUNREACH  == errno))
+
+#define CUN_TCP_READ_AGAIN      \
+    ((EAGAIN       == errno) || \
+     (EINTR        == errno))
 
 struct cun_connection
 {
@@ -36,7 +40,8 @@ struct cun_connection
     } address;
 
     // use as "small buffer" or high level protocol header
-    char small[CUN_CONNECTION_PREALLOCATE]; 
+    char small[CUN_CONNECTION_PREALLOCATE];
+    char small_size; 
 };
 
 struct cun_server
@@ -47,3 +52,4 @@ struct cun_server
 };
 
 int cun_connection_accept(struct cun_server *server, struct cun_connection *connection);
+int cun_connection_shutdown(struct cun_server *server, struct cun_connection *connection);
