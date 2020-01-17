@@ -12,7 +12,7 @@
 #define CUN_CONNECTION_PREALLOCATE 8192
 #define CUN_SERVER_CONNECTION_PULL_SIZE 1000000
 
-#define CUN_TCP_ACCEPT_AGAIN        \
+#define CUN_TCP_ACCEPT_AGAIN    \
     ((EAGAIN       == errno) || \
      (EINTR        == errno) || \
      (ENETDOWN     == errno) || \
